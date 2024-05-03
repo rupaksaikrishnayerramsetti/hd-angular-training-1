@@ -34,10 +34,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 })
 export class SearchPageComponent implements OnInit {
   username: string | null | undefined;
-  countries = ['India', 'France', 'Canada', 'Australia', 'Germany', 'Japan', ''];
+  countries = ['India', 'France', 'Canada', 'Australia', 'Germany', 'Japan', 'Chile'];
   selectedCountry: string = this.countries[0];
   universities: any[] = [];
-  otherCountry: string = ''; //Brazil, Ukraine, Chile, China, United Kingdom, United States
+  otherCountry: string = ''; //Brazil, Ukraine, China, United Kingdom, United States
   searchCount: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 20;
