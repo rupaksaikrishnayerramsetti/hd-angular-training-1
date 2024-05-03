@@ -65,7 +65,7 @@ export class SearchPageComponent implements OnInit {
 
   getUsernameFromLocalStorage(): string | null {
     if (this.checkForLocalStorage()) {
-      return localStorage.getItem('username');
+      return localStorage.getItem('name');
     }
     return null;
   }
@@ -76,7 +76,7 @@ export class SearchPageComponent implements OnInit {
 
   logout() {
     if (this.checkForLocalStorage()) {
-      localStorage.removeItem('username');
+      localStorage.removeItem('name');
       localStorage.removeItem('searchCount')
     }
     this.router.navigate(['/login']);

@@ -31,7 +31,7 @@ export class LoginPageComponent {
     this.hasError = !!this.errorMessage;
     if (!this.hasError) {
       const username = this.name.toLowerCase();
-      localStorage.setItem('username', username);
+      localStorage.setItem('name', username);
       this.router.navigate(['/search']);
     }
   }
