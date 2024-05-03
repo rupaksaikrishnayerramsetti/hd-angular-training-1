@@ -1,0 +1,41 @@
+.first-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .welcome-label {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .second-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .second-line mat-form-field {
+    margin-right: 10px;
+  }
+  
+  .second-line button {
+    align-self: center;
+    margin-right: 10px;
+  }
+  
+  .second-line p {
+    margin: 0;
+  }
+  
+  table {
+    margin-left: 20px;
+  }
+  
+  .mat-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }

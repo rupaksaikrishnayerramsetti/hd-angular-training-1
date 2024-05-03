@@ -1,0 +1,14 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <mat-form-field appearance="outline" [ngClass]="{ 'error': hasError }">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" [(ngModel)]="name" placeholder="Enter your name" (input)="handlechange()" required />
+  </mat-form-field>
+  <div *ngIf="hasError" class="error-message">{{ errorMessage }}</div>
+
+  <div class="button-container">
+    <button class="primary-button" (click)="continue()">Continue</button>
+    <button class="warn-button" (click)="cancel()">Cancel</button>
+  </div>
+</div>

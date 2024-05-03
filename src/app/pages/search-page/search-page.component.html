@@ -1,0 +1,48 @@
+<!-- First Line -->
+<div class="first-line">
+    <div class="welcome-label">Welcome, {{ username }}</div>
+    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+  </div>
+  
+  <!-- Second Line -->
+  <div class="second-line">
+    <mat-form-field appearance="outline">
+      <mat-label>Country</mat-label>
+      <mat-select [(value)]="selectedCountry">
+        <mat-option *ngFor="let country of countries" [value]="country">{{ country }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label>Other Country</mat-label>
+      <input matInput [(ngModel)]="otherCountry" placeholder="Enter other country" />
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" (click)="searchUniversities()">Search</button>
+    <p>Searches made: {{ searchCount }}</p>
+  </div>
+  
+  <table mat-table [dataSource]="getPaginatedUniversities()" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let university">{{ university.name }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="state-province">
+      <th mat-header-cell *matHeaderCellDef>State/Province</th>
+      <td mat-cell *matCellDef="let university">{{ university['state-province'] || '-' }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="domains">
+      <th mat-header-cell *matHeaderCellDef>University Domain</th>
+      <td mat-cell *matCellDef="let university">
+        <a [href]="'https://' + university.domains[0]" target="_blank">{{ university.domains[0] }}</a>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  <mat-paginator [length]="universities.length" [pageSize]="itemsPerPage" [pageSizeOptions]="[20]" (page)="onPageChange($event)">
+  </mat-paginator>
