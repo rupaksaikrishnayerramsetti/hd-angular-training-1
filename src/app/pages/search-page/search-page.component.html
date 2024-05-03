@@ -21,8 +21,16 @@
     <button mat-raised-button color="primary" (click)="searchUniversities()">Search</button>
     <p>Searches made: {{ searchCount }}</p>
   </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
   
-  <table mat-table [dataSource]="getPaginatedUniversities()" class="mat-elevation-z8">
+  <div *ngIf="!loading && universities.length === 0" class="no-data-container">
+    No data available.
+  </div>
+  
+  <table mat-table [dataSource]="getPaginatedUniversities()" class="mat-elevation-z8" *ngIf="!loading && universities.length > 0">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let university">{{ university.name }}</td>

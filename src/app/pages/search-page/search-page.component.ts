@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { SearchService } from '../../Services/SearchAPI/search.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-search-page',
@@ -25,7 +26,8 @@ import { SearchService } from '../../Services/SearchAPI/search.service';
     MatPaginatorModule,
     FormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.css']
@@ -40,6 +42,7 @@ export class SearchPageComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 20;
   displayedColumns: string[] = ['name', 'state-province', 'domains'];
+  loading: boolean = false;
 
   constructor(
     private router: Router,
@@ -80,12 +83,21 @@ export class SearchPageComponent implements OnInit {
   }
 
   searchUniversities() {
+    this.loading = true;
     const country = this.otherCountry ? this.otherCountry : this.selectedCountry;
-    this.searchService.searchUniversities(country).subscribe((data: any) => {
-      this.universities = data;
-      this.updateSearchCount();
-    });
-  }
+    this.searchService.searchUniversities(country).subscribe(
+      (data: any) => {
+        this.universities = data;
+        this.updateSearchCount();
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error searching universities:', error);
+        this.loading = false;
+      }
+    );
+    this.otherCountry = "";
+  }  
 
   getSearchCount(): number {
     if (this.checkForLocalStorage()) {
