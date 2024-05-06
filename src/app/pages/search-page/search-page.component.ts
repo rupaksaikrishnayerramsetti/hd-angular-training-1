@@ -38,7 +38,7 @@ export class SearchPageComponent implements OnInit {
   selectedCountry: string = this.countries[0];
   universities: any[] = [];
   otherCountry: string = ''; //Brazil, Ukraine, China, United Kingdom, United States
-  searchCount: number = 0;
+  searchCount!: number;
   currentPage: number = 1;
   itemsPerPage: number = 20;
   displayedColumns: string[] = ['name', 'state-province', 'domains'];
@@ -50,7 +50,9 @@ export class SearchPageComponent implements OnInit {
     private http: HttpClient,
     private searchService: SearchService 
   ) {
-    
+    if(this.checkForLocalStorage() && localStorage.getItem('searchCount')){
+      this.searchCount = parseInt(localStorage.getItem('searchCount') || '0', 10)
+    }
   }
 
   ngOnInit() {
@@ -59,7 +61,7 @@ export class SearchPageComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.username = this.username?.toUpperCase();
-    this.searchCount = this.getSearchCount();
+    // this.searchCount = this.getSearchCount();
     this.searchUniversities();
   }
 
@@ -82,13 +84,17 @@ export class SearchPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  handleSearch() {
+    this.searchUniversities();
+    this.updateSearchCount();
+  }
+
   searchUniversities() {
     this.loading = true;
     const country = this.otherCountry ? this.otherCountry : this.selectedCountry;
     this.searchService.searchUniversities(country).subscribe(
       (data: any) => {
         this.universities = data;
-        this.updateSearchCount();
         this.loading = false;
       },
       (error) => {
@@ -101,7 +107,8 @@ export class SearchPageComponent implements OnInit {
 
   getSearchCount(): number {
     if (this.checkForLocalStorage()) {
-      return parseInt(localStorage.getItem('searchCount') || '0', 10);
+      const count = localStorage.getItem('searchCount')
+      return parseInt(count ? count : '0', 10);
     }
     return 0;
   }

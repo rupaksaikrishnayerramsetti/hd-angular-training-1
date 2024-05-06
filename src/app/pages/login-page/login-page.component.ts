@@ -32,6 +32,7 @@ export class LoginPageComponent {
     if (!this.hasError) {
       const username = this.name.toLowerCase();
       localStorage.setItem('name', username);
+      localStorage.setItem('searchCount', '0');
       this.router.navigate(['/search']);
     }
   }
